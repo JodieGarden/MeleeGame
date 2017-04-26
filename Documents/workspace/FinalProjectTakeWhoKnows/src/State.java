@@ -17,9 +17,10 @@ public abstract class State {
 	
 	public abstract void render(Graphics graphics);
 	
-	protected Game game;
-	public State(Game game){
-		this.game = game;
+	protected Handler handler;
+	
+	public State(Handler handler){
+		this.handler = handler;
 	}
 
 }

@@ -1,7 +1,7 @@
-import java.awt.Color;
+
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,6 +29,10 @@ public class Game implements Runnable {
     private KeyManager keyManager;
     
     
+    private GameCamera gameCamera;
+    
+    private Handler handler;
+    
     public Game(String title, int width, int height){
         this.title = title;
         this.width = width;
@@ -44,8 +48,11 @@ public class Game implements Runnable {
        display = new Display(title, width, height);
        display.getFrame().addKeyListener(keyManager);
        Assets.init();
-       gameState = new GameState(this);
-       menuState = new MenuState(this);
+       handler = new Handler(this);
+       gameCamera = new GameCamera(handler,10,10);
+
+       gameState = new GameState(handler);
+       menuState = new MenuState(handler);
        State.setState(gameState);
        
        }
@@ -118,6 +125,10 @@ public class Game implements Runnable {
     
     public KeyManager getKeyManager(){
     	return keyManager;
+    }
+    
+    public GameCamera getGameCamera(){
+    	return gameCamera;
     }
     
     public synchronized void start(){
